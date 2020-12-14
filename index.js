@@ -25,8 +25,15 @@ ${actions.map(Action).join('')}
 }
 `
 
+const MultiRule = ({ actions, comment, conditions }) =>
+  `${conditions.map(condition => Rule({
+    actions,
+    comment: condition.comment || comment,
+    condition,
+  })).join('\n')}`
+
 const Main = filters =>
-  `${Header}${filters.map(Rule).join('\n')}`
+  `${Header}${filters.map(MultiRule).join('\n')}`
 
 /** Main */
 

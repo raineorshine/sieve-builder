@@ -1,10 +1,12 @@
 const filters = [
   {
-    comment: 'Grubhub Receipt',
-    condition: {
-      from: 'noreply@grubhub.com',
-      subject: 'Here is your Grubhub Receipt',
-    },
+    conditions: [
+      {
+        comment: 'Grubhub Receipt',
+        from: 'noreply@grubhub.com',
+        subject: 'Here is your Grubhub Receipt',
+      }
+    ],
     actions: [{
       fileinto: ['archive', 'Receipts'],
     }]
