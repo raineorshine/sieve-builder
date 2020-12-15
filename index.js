@@ -9,15 +9,16 @@ if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value 
 
 `
 
-const Action = ({ fileinto }) =>
-  fileinto.map(Fileinto).join('\n')
-
-const Fileinto = dest => `    fileinto "${dest}";`
+const Action = ({ fileinto }) => fileinto.map(Fileinto).join('\n')
 
 const Comment = comment => `# ${comment}\n`
 
 const Condition = ({ from, subject }) =>
-  `${subject ? Subject(subject) + ', ' : ''}address :all :comparator "i;unicode-casemap" :contains "From" "${from}"`
+  `${subject ? Subject(subject) + ', ' : ''}${from ? From(from) : ''}`
+
+const Fileinto = dest => `    fileinto "${dest}";`
+
+const From = from => `address :all :comparator "i;unicode-casemap" :contains "From" "${from}"`
 
 const Rule = ({ actions, comment, condition }) =>
   `${Comment(comment)}if allof (${Condition(condition)}) {
@@ -32,18 +33,8 @@ const MultiRule = ({ actions, comment, conditions }) =>
     condition,
   })).join('\n')}`
 
-const Main = filters =>
-  `${Header}${filters.map(MultiRule).join('\n')}`
+const Sieve = filters => `${Header}${filters.map(MultiRule).join('\n')}`
 
-const Subject = subject =>
-  `header :comparator "i;unicode-casemap" :contains "Subject" "${subject}"`
+const Subject = subject => `header :comparator "i;unicode-casemap" :contains "Subject" "${subject}"`
 
-/** Main */
-
-const sieve = filters => {
-
-  const output = Main(filters)
-  return output
-}
-
-module.exports = sieve
+module.exports = Sieve
