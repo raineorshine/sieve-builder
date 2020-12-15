@@ -17,7 +17,7 @@ const Fileinto = dest => `    fileinto "${dest}";`
 const Comment = comment => `# ${comment}\n`
 
 const Condition = ({ from, subject }) =>
-  `header :comparator "i;unicode-casemap" :contains "Subject" "${subject}", address :all :comparator "i;unicode-casemap" :contains "From" "${from}"`
+  `${subject ? Subject(subject) + ', ' : ''}address :all :comparator "i;unicode-casemap" :contains "From" "${from}"`
 
 const Rule = ({ actions, comment, condition }) =>
   `${Comment(comment)}if allof (${Condition(condition)}) {
@@ -34,6 +34,9 @@ const MultiRule = ({ actions, comment, conditions }) =>
 
 const Main = filters =>
   `${Header}${filters.map(MultiRule).join('\n')}`
+
+const Subject = subject =>
+  `header :comparator "i;unicode-casemap" :contains "Subject" "${subject}"`
 
 /** Main */
 
