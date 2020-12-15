@@ -14,11 +14,13 @@ const Action = ({ fileinto }) => fileinto.map(Fileinto).join('\n')
 const Comment = comment => `# ${comment}\n`
 
 const Condition = ({ from, subject }) =>
-  `${subject ? Subject(subject) + ', ' : ''}${from ? From(from) : ''}`
+  [Subject(subject), From(from)]
+    .filter(x => x)
+    .join(', ')
 
 const Fileinto = dest => `    fileinto "${dest}";`
 
-const From = from => `address :all :comparator "i;unicode-casemap" :contains "From" "${from}"`
+const From = from => from && `address :all :comparator "i;unicode-casemap" :contains "From" "${from}"`
 
 const Rule = ({ actions, comment, condition }) =>
   `${Comment(comment)}if allof (${Condition(condition)}) {
@@ -35,6 +37,6 @@ const MultiRule = ({ actions, comment, conditions }) =>
 
 const Sieve = filters => `${Header}${filters.map(MultiRule).join('\n')}`
 
-const Subject = subject => `header :comparator "i;unicode-casemap" :contains "Subject" "${subject}"`
+const Subject = subject => subject && `header :comparator "i;unicode-casemap" :contains "Subject" "${subject}"`
 
 module.exports = Sieve

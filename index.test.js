@@ -92,3 +92,31 @@ if allof (address :all :comparator "i;unicode-casemap" :contains "From" "noreply
 }
 `)
 })
+
+test('subject', () => {
+
+  const filters = [
+    {
+      conditions: [
+        { comment: 'Hello', subject: 'Hi' },
+      ],
+      actions: [{
+        fileinto: ['archive'],
+      }]
+    }
+  ]
+
+  expect(sieve(filters))
+    .toBe(`require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "spamtest", "fileinto", "imap4flags"];
+
+# do not run script on spam messages
+if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value "ge" :comparator "i;ascii-numeric" "$\{1}") {
+    return;
+}
+
+# Hello
+if allof (header :comparator "i;unicode-casemap" :contains "Subject" "Hi") {
+    fileinto "archive";
+}
+`)
+})
