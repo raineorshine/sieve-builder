@@ -7,7 +7,7 @@ Limited to the specific use case of matching by subject and sender, and combinin
 ## Usage
 
 ```sh
-node index.js filters.js
+node bin.js filters.js
 ```
 
 **filters.js:**
