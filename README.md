@@ -42,7 +42,7 @@ if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value 
 }
 
 # Grubhub Receipt
-if allof (header :comparator "i;unicode-casemap" :contains "Subject" "Here is your Grubhub Receipt", address :all :comparator "i;unicode-casemap" :contains "From" "noreply@grubhub.com") {
+if allof (header :comparator "i;unicode-casemap" :contains "Subject" "Here is your Grubhub Receipt", address :all :comparator "i;unicode-casemap" :matches "From" "noreply@grubhub.com") {
     fileinto "archive";
     fileinto "Receipts";
 }

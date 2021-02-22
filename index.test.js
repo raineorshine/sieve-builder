@@ -22,7 +22,7 @@ if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value 
 }
 
 # Grubhub Receipt
-if allof (header :comparator "i;unicode-casemap" :contains "Subject" "Here is your Grubhub receipt", address :all :comparator "i;unicode-casemap" :contains "From" "noreply@grubhub.com") {
+if allof (header :comparator "i;unicode-casemap" :contains "Subject" "Here is your Grubhub receipt", address :all :comparator "i;unicode-casemap" :matches "From" "noreply@grubhub.com") {
     fileinto "archive";
     fileinto "Receipts";
 }
@@ -52,13 +52,13 @@ if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value 
 }
 
 # Grubhub Receipt
-if allof (header :comparator "i;unicode-casemap" :contains "Subject" "Here is your Grubhub receipt", address :all :comparator "i;unicode-casemap" :contains "From" "noreply@grubhub.com") {
+if allof (header :comparator "i;unicode-casemap" :contains "Subject" "Here is your Grubhub receipt", address :all :comparator "i;unicode-casemap" :matches "From" "noreply@grubhub.com") {
     fileinto "archive";
     fileinto "Receipts";
 }
 
 # Lyft Receipt
-if allof (header :comparator "i;unicode-casemap" :contains "Subject" "Here is your Lyft receipt", address :all :comparator "i;unicode-casemap" :contains "From" "noreply@lyft.com") {
+if allof (header :comparator "i;unicode-casemap" :contains "Subject" "Here is your Lyft receipt", address :all :comparator "i;unicode-casemap" :matches "From" "noreply@lyft.com") {
     fileinto "archive";
     fileinto "Receipts";
 }
@@ -87,7 +87,7 @@ if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value 
 }
 
 # Lyft
-if allof (address :all :comparator "i;unicode-casemap" :contains "From" "noreply@lyft.com") {
+if allof (address :all :comparator "i;unicode-casemap" :matches "From" "noreply@lyft.com") {
     fileinto "archive";
 }
 `)

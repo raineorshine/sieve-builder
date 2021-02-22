@@ -20,7 +20,7 @@ const Condition = ({ from, subject }) =>
 
 const Fileinto = dest => `    fileinto "${dest}";`
 
-const From = from => from && `address :all :comparator "i;unicode-casemap" :contains "From" "${from}"`
+const From = from => from && `address :all :comparator "i;unicode-casemap" :matches "From" "${from}"`
 
 const Rule = ({ actions, comment, condition }) =>
   `${Comment(comment)}if allof (${Condition(condition)}) {
