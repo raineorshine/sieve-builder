@@ -1,16 +1,17 @@
 const sieve = require('./index')
 
 test('from + subject', () => {
-
   const filters = [
     {
       conditions: [
         { comment: 'Grubhub Receipt', from: 'noreply@grubhub.com', subject: 'Here is your Grubhub receipt' },
       ],
-      actions: [{
-        fileinto: ['archive', 'Receipts'],
-      }]
-    }
+      actions: [
+        {
+          fileinto: ['archive', 'Receipts'],
+        },
+      ],
+    },
   ]
 
   expect(sieve(filters))
@@ -30,17 +31,18 @@ if allof (header :comparator "i;unicode-casemap" :contains "Subject" "Here is yo
 })
 
 test('multiple', () => {
-
   const filters = [
     {
       conditions: [
         { comment: 'Grubhub Receipt', from: 'noreply@grubhub.com', subject: 'Here is your Grubhub receipt' },
         { comment: 'Lyft Receipt', from: 'noreply@lyft.com', subject: 'Here is your Lyft receipt' },
       ],
-      actions: [{
-        fileinto: ['archive', 'Receipts'],
-      }]
-    }
+      actions: [
+        {
+          fileinto: ['archive', 'Receipts'],
+        },
+      ],
+    },
   ]
 
   expect(sieve(filters))
@@ -66,16 +68,15 @@ if allof (header :comparator "i;unicode-casemap" :contains "Subject" "Here is yo
 })
 
 test('from', () => {
-
   const filters = [
     {
-      conditions: [
-        { comment: 'Lyft', from: 'noreply@lyft.com' },
+      conditions: [{ comment: 'Lyft', from: 'noreply@lyft.com' }],
+      actions: [
+        {
+          fileinto: ['archive'],
+        },
       ],
-      actions: [{
-        fileinto: ['archive'],
-      }]
-    }
+    },
   ]
 
   expect(sieve(filters))
@@ -94,16 +95,15 @@ if allof (address :all :comparator "i;unicode-casemap" :matches "From" "noreply@
 })
 
 test('subject', () => {
-
   const filters = [
     {
-      conditions: [
-        { comment: 'Hello', subject: 'Hi' },
+      conditions: [{ comment: 'Hello', subject: 'Hi' }],
+      actions: [
+        {
+          fileinto: ['archive'],
+        },
       ],
-      actions: [{
-        fileinto: ['archive'],
-      }]
-    }
+    },
   ]
 
   expect(sieve(filters))

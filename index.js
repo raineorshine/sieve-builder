@@ -6,23 +6,23 @@ if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value 
 
 const Action = ({ fileinto }) => fileinto.map(Fileinto).join('')
 
-const Condition = ({ from, subject }) =>
-  [Subject(subject), From(from)]
-    .filter(x => x)
-    .join(', ')
+const Condition = ({ from, subject }) => [Subject(subject), From(from)].filter(x => x).join(', ')
 
 const Fileinto = dest => `fileinto "${dest}";`
 
 const From = from => from && `address :all :comparator "i;unicode-casemap" :matches "From" "${from}"`
 
-const Rule = ({ actions, condition }) =>
-  `if allof (${Condition(condition)}){${actions.map(Action).join('')}}`
+const Rule = ({ actions, condition }) => `if allof (${Condition(condition)}){${actions.map(Action).join('')}}`
 
 const MultiRule = ({ actions, conditions }) =>
-  `${conditions.map(condition => Rule({
-    actions,
-    condition,
-  })).join('\n')}`
+  `${conditions
+    .map(condition =>
+      Rule({
+        actions,
+        condition,
+      }),
+    )
+    .join('\n')}`
 
 const Sieve = filters => `${Header}${filters.map(MultiRule).join('\n')}`
 
