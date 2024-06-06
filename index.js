@@ -12,7 +12,10 @@ const Fileinto = dest => `fileinto "${dest}";`
 
 const From = from => from && `address :all :comparator "i;unicode-casemap" :matches "From" "${from}"`
 
-const Rule = ({ actions, condition }) => `if allof (${Condition(condition)}){${actions.map(Action).join('')}}`
+const Rule = ({ actions, condition }) =>
+  `if allof (${Condition(typeof condition === 'string' ? { from: condition } : condition)}){${actions
+    .map(Action)
+    .join('')}}`
 
 const MultiRule = ({ actions, conditions }) =>
   `${conditions

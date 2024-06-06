@@ -77,3 +77,21 @@ test('subject', () => {
 if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value "ge" :comparator "i;ascii-numeric" "$\{1}") {return;}
 if allof (header :comparator "i;unicode-casemap" :contains "Subject" "Hi"){fileinto "archive";}`)
 })
+
+test('allow naked email condition', () => {
+  const filters = [
+    {
+      conditions: ['noreply@lyft.com'],
+      actions: [
+        {
+          fileinto: ['archive'],
+        },
+      ],
+    },
+  ]
+
+  expect(sieve(filters))
+    .toBe(`require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "spamtest", "fileinto", "imap4flags"];
+if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value "ge" :comparator "i;ascii-numeric" "$\{1}") {return;}
+if allof (address :all :comparator "i;unicode-casemap" :matches "From" "noreply@lyft.com"){fileinto "archive";}`)
+})
