@@ -3,9 +3,7 @@ const sieve = require('./index')
 test('from + subject', () => {
   const filters = [
     {
-      conditions: [
-        { comment: 'Grubhub Receipt', from: 'noreply@grubhub.com', subject: 'Here is your Grubhub receipt' },
-      ],
+      conditions: [{ comment: 'Grubhub Receipt', from: 'noreply@grubhub.com', subject: 'Here is your Grubhub receipt' }],
       actions: [
         {
           fileinto: ['archive', 'Receipts'],
@@ -14,13 +12,12 @@ test('from + subject', () => {
     },
   ]
 
-  expect(sieve(filters))
-    .toBe(`require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "spamtest", "fileinto", "imap4flags"];
+  expect(sieve(filters)).toBe(`require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "spamtest", "fileinto", "imap4flags"];
 if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value "ge" :comparator "i;ascii-numeric" "$\{1}") {return;}
 if allof (header :comparator "i;unicode-casemap" :contains "Subject" "Here is your Grubhub receipt", address :all :comparator "i;unicode-casemap" :matches "From" "noreply@grubhub.com"){fileinto "archive";fileinto "Receipts";}`)
 })
 
-test('multiple', () => {
+test('multiple matches with the same destination folder', () => {
   const filters = [
     {
       conditions: [
@@ -35,8 +32,7 @@ test('multiple', () => {
     },
   ]
 
-  expect(sieve(filters))
-    .toBe(`require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "spamtest", "fileinto", "imap4flags"];
+  expect(sieve(filters)).toBe(`require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "spamtest", "fileinto", "imap4flags"];
 if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value "ge" :comparator "i;ascii-numeric" "$\{1}") {return;}
 if allof (header :comparator "i;unicode-casemap" :contains "Subject" "Here is your Grubhub receipt", address :all :comparator "i;unicode-casemap" :matches "From" "noreply@grubhub.com"){fileinto "archive";fileinto "Receipts";}
 if allof (header :comparator "i;unicode-casemap" :contains "Subject" "Here is your Lyft receipt", address :all :comparator "i;unicode-casemap" :matches "From" "noreply@lyft.com"){fileinto "archive";fileinto "Receipts";}`)
@@ -54,8 +50,7 @@ test('from', () => {
     },
   ]
 
-  expect(sieve(filters))
-    .toBe(`require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "spamtest", "fileinto", "imap4flags"];
+  expect(sieve(filters)).toBe(`require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "spamtest", "fileinto", "imap4flags"];
 if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value "ge" :comparator "i;ascii-numeric" "$\{1}") {return;}
 if allof (address :all :comparator "i;unicode-casemap" :matches "From" "noreply@lyft.com"){fileinto "archive";}`)
 })
@@ -72,8 +67,7 @@ test('subject', () => {
     },
   ]
 
-  expect(sieve(filters))
-    .toBe(`require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "spamtest", "fileinto", "imap4flags"];
+  expect(sieve(filters)).toBe(`require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "spamtest", "fileinto", "imap4flags"];
 if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value "ge" :comparator "i;ascii-numeric" "$\{1}") {return;}
 if allof (header :comparator "i;unicode-casemap" :contains "Subject" "Hi"){fileinto "archive";}`)
 })
@@ -90,8 +84,7 @@ test('allow naked email condition', () => {
     },
   ]
 
-  expect(sieve(filters))
-    .toBe(`require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "spamtest", "fileinto", "imap4flags"];
+  expect(sieve(filters)).toBe(`require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "spamtest", "fileinto", "imap4flags"];
 if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value "ge" :comparator "i;ascii-numeric" "$\{1}") {return;}
 if allof (address :all :comparator "i;unicode-casemap" :matches "From" "noreply@lyft.com"){fileinto "archive";}`)
 })
