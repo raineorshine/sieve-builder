@@ -15,7 +15,7 @@ Limited to the specific use case of matching by subject and sender, and combinin
 node bin.js filters.js
 ```
 
-This will generate a sieve script and save it to `./out/1.sieve.txt`.
+This will generate a sieve script and save it to `./out/1.sieve.txt`, etc
 
 **filters.js:**
 
