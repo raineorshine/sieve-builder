@@ -7,6 +7,7 @@ Limited to the specific use case of matching by subject and sender, and combinin
 - Sieve spec: https://www.rfc-editor.org/info/rfc5228
 - ProtonMail spec: https://proton.me/support/sieve-advanced-custom-filters
   - Note: ProtonMail does not support the [body](https://datatracker.ietf.org/doc/html/rfc5173) extension.
+  - Limited to 50k characters
 
 ## Usage
 
