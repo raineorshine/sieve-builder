@@ -10,7 +10,7 @@ const Condition = ({ from, subject }) => [Subject(subject), From(from)].filter(x
 
 const Fileinto = dest => `fileinto "${dest}";`
 
-const From = from => from && `address :all :comparator "i;unicode-casemap" :matches "From" "${from}"`
+const From = from => from && `address :all :matches "From" "${from}"`
 
 const Rule = ({ actions, condition }) => `if allof (${Condition(typeof condition === 'string' ? { from: condition } : condition)}){${actions.map(Action).join('')}}`
 
@@ -31,6 +31,6 @@ const MultiRule = ({ actions, conditions }) => {
 
 const Sieve = filters => `${Header}${filters.map(MultiRule).join('\n')}`
 
-const Subject = subject => subject && `header :comparator "i;unicode-casemap" :contains "Subject" "${subject}"`
+const Subject = subject => subject && `header :contains "Subject" "${subject}"`
 
 module.exports = Sieve
