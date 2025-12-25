@@ -12,20 +12,22 @@ const Fileinto = dest => `fileinto "${dest}";`
 
 const From = from => from && `address :all :comparator "i;unicode-casemap" :matches "From" "${from}"`
 
-const Rule = ({ actions, condition }) =>
-  `if allof (${Condition(typeof condition === 'string' ? { from: condition } : condition)}){${actions
-    .map(Action)
-    .join('')}}`
+const Rule = ({ actions, condition }) => `if allof (${Condition(typeof condition === 'string' ? { from: condition } : condition)}){${actions.map(Action).join('')}}`
 
-const MultiRule = ({ actions, conditions }) =>
-  `${conditions
-    .map(condition =>
-      Rule({
-        actions,
-        condition,
-      }),
-    )
-    .join('\n')}`
+const MultiRule = ({ actions, conditions }) => {
+  if (conditions.length === 1) {
+    return Rule({
+      actions,
+      condition: conditions[0],
+    })
+  }
+
+  const conditionBlocks = conditions.map(condition => `  allof (${Condition(typeof condition === 'string' ? { from: condition } : condition)})`).join(',\n')
+
+  const actionBlocks = actions.map(action => action.fileinto.map(dest => `  ${Fileinto(dest)}`).join('\n')).join('\n')
+
+  return `if anyof (\n${conditionBlocks}\n) {\n${actionBlocks}\n}`
+}
 
 const Sieve = filters => `${Header}${filters.map(MultiRule).join('\n')}`
 

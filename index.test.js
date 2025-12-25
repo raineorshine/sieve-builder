@@ -17,7 +17,7 @@ if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value 
 if allof (header :comparator "i;unicode-casemap" :contains "Subject" "Here is your Grubhub receipt", address :all :comparator "i;unicode-casemap" :matches "From" "noreply@grubhub.com"){fileinto "archive";fileinto "Receipts";}`)
 })
 
-test('multiple matches with the same destination folder', () => {
+test('multiple', () => {
   const filters = [
     {
       conditions: [
@@ -34,8 +34,13 @@ test('multiple matches with the same destination folder', () => {
 
   expect(sieve(filters)).toBe(`require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "spamtest", "fileinto", "imap4flags"];
 if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value "ge" :comparator "i;ascii-numeric" "$\{1}") {return;}
-if allof (header :comparator "i;unicode-casemap" :contains "Subject" "Here is your Grubhub receipt", address :all :comparator "i;unicode-casemap" :matches "From" "noreply@grubhub.com"){fileinto "archive";fileinto "Receipts";}
-if allof (header :comparator "i;unicode-casemap" :contains "Subject" "Here is your Lyft receipt", address :all :comparator "i;unicode-casemap" :matches "From" "noreply@lyft.com"){fileinto "archive";fileinto "Receipts";}`)
+if anyof (
+  allof (header :comparator "i;unicode-casemap" :contains "Subject" "Here is your Grubhub receipt", address :all :comparator "i;unicode-casemap" :matches "From" "noreply@grubhub.com"),
+  allof (header :comparator "i;unicode-casemap" :contains "Subject" "Here is your Lyft receipt", address :all :comparator "i;unicode-casemap" :matches "From" "noreply@lyft.com")
+) {
+  fileinto "archive";
+  fileinto "Receipts";
+}`)
 })
 
 test('from', () => {
