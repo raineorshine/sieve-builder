@@ -19,3 +19,28 @@ console.log(
     })
     .join('\n'),
 )
+
+/* Deletes individual filters from ProtonMail UI. */
+function waitUntil(fn) {
+  return new Promise(r => {
+    const i = setInterval(() => {
+      const result = fn()
+      if (result) clearInterval(i), r(result)
+    }, 50)
+  })
+}
+
+let lastDeleted
+while (true) {
+  lastDeleted = document.querySelectorAll('table .text-ellipsis')[2].textContent
+  const filterDropdown = document.querySelectorAll('[data-testid="dropdownActions:dropdown"]')[2]
+  if (!filterDropdown) {
+    console.log('All done!')
+    break
+  }
+  filterDropdown.click()
+  ;(await waitUntil(() => document.querySelector('[aria-label^="Delete filter"]'))).click()
+  ;(await waitUntil(() => document.querySelector('.button-solid-danger'))).click()
+
+  await waitUntil(() => document.querySelectorAll('table .text-ellipsis')[2].textContent !== lastDeleted)
+}
