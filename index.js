@@ -34,3 +34,5 @@ const Sieve = filters => `${Header}${filters.map(MultiRule).join('\n')}`
 const Subject = subject => subject && `header :contains "Subject" "${subject}"`
 
 module.exports = Sieve
+module.exports.Header = Header
+module.exports.MultiRule = MultiRule
