@@ -30,7 +30,7 @@ for (const rule of rules) {
 
   if (potentialContent.length > MAX_FILE_SIZE && currentFileRules.length > 0) {
     // Save current file and start a new one
-    const outputFile = path.join(outDir, `${fileIndex}.sieve.txt`)
+    const outputFile = path.join(outDir, `${fileIndex}.sieve`)
     fs.writeFileSync(outputFile, currentFileContent)
     files.push(outputFile)
 
@@ -47,7 +47,7 @@ for (const rule of rules) {
 
 // Write the last file if there are remaining rules
 if (currentFileRules.length > 0) {
-  const outputFile = path.join(outDir, `${fileIndex}.sieve.txt`)
+  const outputFile = path.join(outDir, `${fileIndex}.sieve`)
   fs.writeFileSync(outputFile, currentFileContent)
   files.push(outputFile)
 }
