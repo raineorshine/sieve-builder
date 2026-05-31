@@ -13,9 +13,9 @@ const { execSync } = require('child_process')
 const fs = require('fs')
 const path = require('path')
 const { chromium } = require('playwright')
+const { outDir } = require('../index')
 
 const PROTONMAIL_FILTERS_URL = 'https://account.proton.me/u/0/mail/filters'
-const OUT_DIR = path.join(__dirname, '..', 'out')
 const USER_DATA_DIR = path.join(__dirname, '..', '.playwright-user-data')
 const FILTER_NAME_PREFIX = 'sieve-builder-'
 
@@ -27,12 +27,12 @@ async function main() {
 
   // 2. Read generated .sieve files
   const sieveFiles = fs
-    .readdirSync(OUT_DIR)
+    .readdirSync(outDir)
     .filter(f => /^\d+\.sieve$/.test(f))
     .sort((a, b) => parseInt(a) - parseInt(b))
     .map(f => ({
       name: `${FILTER_NAME_PREFIX}${path.basename(f, '.sieve')}`,
-      content: fs.readFileSync(path.join(OUT_DIR, f), 'utf-8'),
+      content: fs.readFileSync(path.join(outDir, f), 'utf-8'),
     }))
 
   if (sieveFiles.length === 0) {

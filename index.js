@@ -1,4 +1,5 @@
 /** Render functions */
+const path = require('path')
 
 const Header = `require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "spamtest", "fileinto", "imap4flags"];
 if allof (environment :matches "vnd.proton.spam-threshold" "*", spamtest :value "ge" :comparator "i;ascii-numeric" "$\{1}") {return;}
@@ -33,6 +34,9 @@ const Sieve = filters => `${Header}${filters.map(MultiRule).join('\n')}`
 
 const Subject = subject => subject && `header :contains "Subject" "${subject}"`
 
+const outDir = path.join(__dirname, 'out')
+
 module.exports = Sieve
 module.exports.Header = Header
 module.exports.MultiRule = MultiRule
+module.exports.outDir = outDir

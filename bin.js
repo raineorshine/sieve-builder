@@ -5,13 +5,12 @@ const filename = process.argv[2] || 'filters.js'
 const filters = require(path.resolve(filename))
 
 // Extract header and MultiRule from index.js
-const { Header, MultiRule } = require('./index')
+const { Header, MultiRule, outDir } = require('./index')
 
 // Generate individual rules without header
 const rules = filters.map(MultiRule)
 
 const MAX_FILE_SIZE = 50000 // 50k characters
-const outDir = path.join(__dirname, 'out')
 
 // Ensure out directory exists
 if (!fs.existsSync(outDir)) {
