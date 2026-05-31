@@ -20,6 +20,7 @@ const OUT_DIR = path.join(__dirname, '..', 'out')
 const USER_DATA_DIR = path.join(__dirname, '..', '.playwright-user-data')
 const FILTER_NAME_PREFIX = 'sieve-builder-'
 
+/** Builds sieve chunks from filters.js and deploys each to ProtonMail. */
 async function main() {
   // 1. Build sieve chunks
   console.info('Building sieve chunks...')
@@ -71,6 +72,13 @@ async function main() {
   }
 }
 
+/**
+ * Opens an existing ProtonMail sieve filter by name, replaces its content, and saves.
+ *
+ * @param {import('playwright').Page} page - Playwright page instance on the filters page.
+ * @param {string} filterName - The name of the filter to update (e.g. "sieve-builder-1").
+ * @param {string} sieveContent - The full sieve script to write into the filter.
+ */
 async function deploySieveFilter(page, filterName, sieveContent) {
   // The button's visible text is "Edit Sieve" but aria-label includes the filter name
   const editButton = page.locator(`button[aria-label*="${filterName}"]`)
