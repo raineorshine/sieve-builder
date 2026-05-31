@@ -66,8 +66,7 @@ async function main() {
     }
 
     console.info('All filters deployed successfully!')
-  }
-  finally {
+  } finally {
     await browser.close()
   }
 }

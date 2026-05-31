@@ -14,32 +14,12 @@
   "scripts": {
     "build": "node build.js",
     "deploy": "node scripts/deploy-filters.js",
-    "lint": "eslint .",
-    "lintfix": "eslint --fix",
+    "lint": "prettier --check .",
+    "lintfix": "prettier --write .",
     "test": "jest",
     "test:watch": "jest --watch"
   },
-  "eslintConfig": {
-    "extends": [
-      "raine"
-    ],
-    "rules": {
-      "comma-dangle": "off",
-      "fp/no-loops": "off",
-      "fp/no-mutating-methods": "off",
-      "no-extra-parens": "off"
-    }
-  },
   "devDependencies": {
-    "eslint": "^8.23.1",
-    "eslint-config-raine": "^0.3.0",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-plugin-fp": "^2.3.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsdoc": "^39.3.6",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.0.1",
-    "eslint-plugin-standard": "^4.1.0",
     "jest": "^29.0.3",
     "playwright": "^1.60.0",
     "prettier": "^2.8.4"
