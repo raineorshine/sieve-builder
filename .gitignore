@@ -2,3 +2,4 @@ node_modules
 filters.js
 .DS_Store
 out
+.playwright-user-data
