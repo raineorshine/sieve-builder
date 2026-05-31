@@ -2,13 +2,12 @@
 /**
  * Builds sieve chunks and deploys them to ProtonMail custom filters.
  *
- * Usage:
- *   node scripts/deploy-filters.js
+ * Usage: node scripts/deploy-filters.js
  *
  * Prerequisites:
- *   - npx playwright install chromium
- *   - Existing sieve filters named "sieve-builder-1", "sieve-builder-2", etc. in ProtonMail
- *   - First run requires manual login (persistent context saves session)
+ * - npx playwright install chromium
+ * - Existing sieve filters named "sieve-builder-1", "sieve-builder-2", etc. in ProtonMail
+ * - First run requires manual login (persistent context saves session)
  */
 const { execSync } = require('child_process')
 const fs = require('fs')
@@ -67,7 +66,8 @@ async function main() {
     }
 
     console.info('All filters deployed successfully!')
-  } finally {
+  }
+  finally {
     await browser.close()
   }
 }
@@ -75,9 +75,9 @@ async function main() {
 /**
  * Opens an existing ProtonMail sieve filter by name, replaces its content, and saves.
  *
- * @param {import('playwright').Page} page - Playwright page instance on the filters page.
- * @param {string} filterName - The name of the filter to update (e.g. "sieve-builder-1").
- * @param {string} sieveContent - The full sieve script to write into the filter.
+ * @param page - Playwright page instance on the filters page.
+ * @param filterName - The name of the filter to update (e.g. "sieve-builder-1").
+ * @param sieveContent - The full sieve script to write into the filter.
  */
 async function deploySieveFilter(page, filterName, sieveContent) {
   // The button's visible text is "Edit Sieve" but aria-label includes the filter name
