@@ -44,7 +44,7 @@ async function main() {
 
   // 3. Launch browser with persistent context (reuses ProtonMail login)
   const browser = await chromium.launchPersistentContext(USER_DATA_DIR, {
-    headless: false,
+    headless: true,
     viewport: { width: 1280, height: 900 },
   })
 
