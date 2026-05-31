@@ -21,7 +21,13 @@
   "eslintConfig": {
     "extends": [
       "raine"
-    ]
+    ],
+    "rules": {
+      "comma-dangle": "off",
+      "fp/no-loops": "off",
+      "fp/no-mutating-methods": "off",
+      "no-extra-parens": "off"
+    }
   },
   "devDependencies": {
     "eslint": "^8.23.1",

@@ -1,7 +1,7 @@
-/** Parses manual filters from https://account.proton.me/u/0/mail/filters. */
+/** Parses manual filters from https://account.proton.me/u/0/mail/filters. Intended to be used in the browser console. */
 let lastLabel
 console.log(
-  [...$$('td > [title]')]
+  [...document.querySelectorAll('td > [title]')]
     .map(el => el.textContent)
     .filter(text => text.includes(' - '))
     .map(text => text.split(' - '))
@@ -22,25 +22,30 @@ console.log(
 
 /* Deletes individual filters from ProtonMail UI. */
 function waitUntil(fn) {
-  return new Promise(r => {
+  return new Promise(resolve => {
     const i = setInterval(() => {
       const result = fn()
-      if (result) clearInterval(i), r(result)
+      if (result) {
+        clearInterval(i)
+        resolve(result)
+      }
     }, 50)
   })
 }
 
-let lastDeleted
-while (true) {
-  lastDeleted = document.querySelectorAll('table .text-ellipsis')[2].textContent
-  const filterDropdown = document.querySelectorAll('[data-testid="dropdownActions:dropdown"]')[2]
-  if (!filterDropdown) {
-    console.log('All done!')
-    break
-  }
-  filterDropdown.click()
-  ;(await waitUntil(() => document.querySelector('[aria-label^="Delete filter"]'))).click()
-  ;(await waitUntil(() => document.querySelector('.button-solid-danger'))).click()
+;(async () => {
+  let lastDeleted
+  while (true) {
+    lastDeleted = document.querySelectorAll('table .text-ellipsis')[2].textContent
+    const filterDropdown = document.querySelectorAll('[data-testid="dropdownActions:dropdown"]')[2]
+    if (!filterDropdown) {
+      console.log('All done!')
+      break
+    }
+    filterDropdown.click()
+    ;(await waitUntil(() => document.querySelector('[aria-label^="Delete filter"]'))).click()
+    ;(await waitUntil(() => document.querySelector('.button-solid-danger'))).click()
 
-  await waitUntil(() => document.querySelectorAll('table .text-ellipsis')[2].textContent !== lastDeleted)
-}
+    await waitUntil(() => document.querySelectorAll('table .text-ellipsis')[2].textContent !== lastDeleted)
+  }
+})()

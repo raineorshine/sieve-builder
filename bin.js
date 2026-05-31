@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 const fs = require('fs')
 const path = require('path')
-const sieve = require('./index')
 const filename = process.argv[2] || 'filters.js'
 const filters = require(path.resolve(filename))
 
@@ -38,8 +37,9 @@ for (const rule of rules) {
     fileIndex++
     currentFileContent = Header + rule + '\n'
     currentFileRules = [rule]
-  } else {
-    // Add rule to current file
+  }
+  // Add rule to current file
+  else {
     currentFileContent = potentialContent
     currentFileRules.push(rule)
   }
