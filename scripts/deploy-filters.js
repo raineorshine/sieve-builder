@@ -53,7 +53,7 @@ async function main() {
   try {
     // 4. Navigate to filters page
     console.info('Navigating to ProtonMail filters...')
-    await page.goto(PROTONMAIL_FILTERS_URL, { waitUntil: 'networkidle', timeout: 120000 })
+    await page.goto(PROTONMAIL_FILTERS_URL, { waitUntil: 'networkidle', timeout: 30000 })
 
     // Wait for an edit button to confirm page is loaded
     await page.locator('button[aria-label*="sieve-builder"]').first().waitFor({ timeout: 120000 })
