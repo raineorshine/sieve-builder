@@ -105,3 +105,7 @@ After adding, summarize:
 - Where it was placed in the file
 
 **Do NOT commit to git.** `filters.js` is gitignored.
+
+### 9. Deploy
+
+After confirming the change, deploy the updated filters by running `npm run deploy`.
