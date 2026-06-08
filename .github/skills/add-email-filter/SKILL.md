@@ -85,11 +85,18 @@ Use the simplest format that matches:
 
 Only include `subject` if needed to distinguish this filter from others or to target specific unwanted emails from an otherwise useful sender.
 
-### 6. Add to `filters.js`
+### 6. Check for Existing Filters
+
+Before modifying `filters.js`, search the file for any existing filters that match the sender's domain name. Search for the bare domain (e.g. `example.com`) to catch exact addresses, `*@domain.com`, and `*@*.domain.com` patterns.
+
+- If one or more matching filters already exist, list them to the user (showing the pattern, label/action, and section for each) and use the ask-questions tool to confirm whether to proceed before modifying `filters.js`.
+- If no matching filter exists, continue to the next step.
+
+### 7. Add to `filters.js`
 
 Insert the new condition into the appropriate `conditions` array in `filters.js`. If no existing section matches the target label + action combination, create a new filter block following the existing pattern.
 
-### 7. Confirm
+### 8. Confirm
 
 After adding, summarize:
 
