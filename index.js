@@ -36,7 +36,11 @@ const Subject = subject => subject && `header :contains "Subject" "${subject}"`
 
 const outDir = path.join(__dirname, 'out')
 
+/** Returns a new filters array with entry appended. Does not mutate the input. */
+const addFilter = (filters, entry) => [...filters, entry]
+
 module.exports = Sieve
 module.exports.Header = Header
 module.exports.MultiRule = MultiRule
 module.exports.outDir = outDir
+module.exports.addFilter = addFilter

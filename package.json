@@ -13,14 +13,12 @@
   },
   "scripts": {
     "build": "node build.js",
-    "deploy": "node scripts/deploy-filters.js",
     "format": "prettier --write .",
     "test": "jest",
     "test:watch": "jest --watch"
   },
   "devDependencies": {
     "jest": "^29.0.3",
-    "playwright": "^1.60.0",
     "prettier": "^2.8.4"
   }
 }
